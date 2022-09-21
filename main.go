@@ -8,7 +8,8 @@ import (
 func main() {
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
-	router.GET("/monkeys", handler.GetMonkeys)
-	router.Run("localhost:8080")
 
+	router.GET("/monkeys", handler.GetMonkeys)
+	router.GET("/monkeys/:name", handler.GetMonkeyByName)
+	router.Run("localhost:8080")
 }
