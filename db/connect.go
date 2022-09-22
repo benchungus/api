@@ -3,6 +3,8 @@ package db
 import (
 	"context"
 	"log"
+	"os"
+	"time"
 
 	"github.com/benchungus/api/utils"
 
@@ -12,7 +14,14 @@ import (
 )
 
 func ConnDB() *mongo.Client {
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
+	utils.GetEnvVar()
+	uri := os.Getenv("MONGODB_URI")
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+	if err != nil {
+		log.Fatal(err)
+	}
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	err = client.Connect(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
