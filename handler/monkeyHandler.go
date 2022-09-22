@@ -8,11 +8,11 @@ import (
 	"github.com/benchungus/api/db"
 	"github.com/benchungus/api/models"
 
-	//"github.com/benchungus/api/models"
 	"github.com/benchungus/api/utils"
 	"github.com/gin-gonic/gin"
 )
 
+//handles GET request from /monkeys endpoint, returns all monkeys in db
 func GetMonkeys(c *gin.Context) {
 	utils.InitializeLogger()
 	utils.Logger.Info("grabbing all monkeys")
@@ -21,6 +21,7 @@ func GetMonkeys(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, monkeys)
 }
 
+//handles GET request from /monkeys/:name endpoint, returns named monkey
 func GetMonkeyByName(c *gin.Context) {
 	name := c.Param("name")
 	utils.InitializeLogger()
@@ -30,6 +31,7 @@ func GetMonkeyByName(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, monkey)
 }
 
+//handles POST request from /monkeys endpoint, inserts new monkey
 func NewMonkey(c *gin.Context) {
 	utils.InitializeLogger()
 	var newMonkey models.Monkey
@@ -42,6 +44,7 @@ func NewMonkey(c *gin.Context) {
 	utils.Logger.Info("inserted monkey named " + newMonkey.Name)
 }
 
+//handles POST request from /monkeys/:name endpoint, updates hobby of named monkey
 func ChangeHobby(c *gin.Context) {
 	utils.InitializeLogger()
 	name := c.Param("name")
@@ -55,6 +58,7 @@ func ChangeHobby(c *gin.Context) {
 	utils.Logger.Info("updated monkey named " + newMonkey.Name)
 }
 
+//handles DELETE request from /monkeys/:name endpoint, kills named monkey
 func KillMonkey(c *gin.Context) {
 	name := c.Param("name")
 	utils.InitializeLogger()
